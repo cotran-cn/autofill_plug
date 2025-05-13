@@ -1,0 +1,171 @@
+body {
+  width: 300px;
+  font-family: Arial, sans-serif; /* Added a default font */
+  padding: 45px 20px 20px; /* Adjusted top padding, kept others at 20px */
+  position: relative;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  background-color: #f8f9fa; /* Slightly lighter background */
+  color: #333; /* Default text color */
+}
+
+textarea {
+  width: 100%;
+  height: 80px; /* Adjusted height */
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ced4da; /* Standard bootstrap-like border color */
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical; /* Allow vertical resize */
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Smooth transitions */
+}
+
+textarea:focus {
+  border-color: #80bdff; /* Highlight color on focus */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Bootstrap-like focus shadow */
+}
+
+button {
+  width: 100%;
+  padding: 10px 15px; /* More horizontal padding */
+  margin-bottom: 10px; /* Added margin for spacing between buttons */
+  background-color: #007bff; /* Primary button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500; /* Slightly bolder text */
+  line-height: 1.5;
+  text-align: center; /* Ensure text is centered */
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button:hover {
+  background-color: #0069d9; /* Darker shade on hover for primary */
+  border-color: #0062cc;
+}
+
+#settingsButton {
+  position: absolute;
+  top: 10px; /* Adjusted position */
+  right: 10px; /* Changed from left to right */
+  width: auto; /* Added to fix positioning */
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* Increased icon size */
+  color: #555; /* Icon color */
+  z-index: 10;
+}
+
+#settingsButton:hover {
+  color: #000;
+}
+
+#settingsPanel {
+  position: absolute;
+  top: 40px; /* Adjusted to be below the settings button */
+  right: 10px; /* Changed from left to right */
+  background: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Softer shadow */
+  transform: translateY(-10px) scale(0.95);
+  opacity: 0;
+  visibility: hidden; /* Use visibility for smoother transitions */
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s 0.3s;
+  z-index: 100; /* Ensure it's above other elements */
+  width: 270px; /* Adjusted width */
+  box-sizing: border-box;
+}
+
+#settingsPanel.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s 0s;
+}
+
+#settingsPanel h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+#settingsPanel div {
+  margin-bottom: 10px;
+}
+
+#settingsPanel label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
+#settingsPanel input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+#settingsPanel button {
+  background-color: #28a745; /* Green for save button */
+  font-size: 14px;
+  padding: 8px;
+}
+
+#settingsPanel button:hover {
+  background-color: #218838;
+}
+
+/* Specific button styling */
+#aiButton {
+  background-color: #007bff; /* Default primary */
+  border-color: #007bff;
+}
+
+#aiButton:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+#fillButton {
+  background-color: #28a745; /* Common 'success' green */
+  border-color: #28a745;
+}
+
+#fillButton:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Utility for spacing */
+.mb-10 {
+  margin-bottom: 10px !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+#formInfo {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #495057;
+    border: 1px solid #dee2e6; /* Add a border for consistency */
+}

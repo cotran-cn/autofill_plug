@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>表单自动填充</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+<body>
+  <button id="settingsButton">⚙️设置</button> 
+  <div id="settingsPanel">
+    <h3>API设置</h3>
+    <div>
+      <label for="apiBaseUrl">API接口地址:</label> 
+      <input type="text" id="apiBaseUrl" placeholder="https://api.openai.com/">
+    </div>
+    <div>
+      <label for="apiKey">API密钥:</label> 
+      <input type="text" id="apiKey" placeholder="输入API密钥">
+    </div>
+    <button id="saveSettings">保存设置</button>
+  </div>
+
+  <div id="formInfo"></div>
+  <textarea id="aiInput" placeholder="请输入要处理的信息..."></textarea>
+  <button id="aiButton">AI解析</button>
+  <textarea id="inputData" placeholder="AI处理结果显示..."></textarea>
+  <button id="fillButton">填充表单</button>
+  <script src="popup.js"></script>
+</body>
+</html>
