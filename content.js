@@ -17,6 +17,15 @@ function findFormElements() {
       tagName: element.tagName,
       label: label
     };
+    
+    // 添加对select元素的特殊处理
+    if (element.tagName === 'SELECT') {
+      elementInfo.options = Array.from(element.options).map(option => ({
+        text: option.text,
+        value: option.value
+      }));
+    }
+    
     if (element.type === 'radio' || element.type === 'checkbox') {
       const name = element.name;
       const group = document.querySelectorAll(`input[name='${name}']`);
@@ -40,10 +49,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const data = request.data;
     let filledCount = 0;
     inputs.forEach(input => {
-      // 先移除所有可能残留的样式
-      input.style.border = '';
-      input.style.transition = '';
-      
       if (input.name || input.id) {
         try {
           const fieldName = input.name || input.id;
@@ -53,7 +58,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             throw new Error(`未找到匹配的字段值: ${fieldName} 或 ${labelText}。请确保输入数据包含此字段，格式为"字段名: 值"或"标签文本: 值"`);
           }
           
-          // 特殊处理复选框和单选按钮
           if (input.type === 'checkbox' || input.type === 'radio') {
             if (input.checked !== (fieldValue === input.value || fieldValue === 'true')) {
               input.checked = fieldValue === input.value || fieldValue === 'true';
@@ -65,23 +69,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
               filledCount++;
             }
           }
-          
-          input.style.border = '1px solid green';
-          // 添加transition属性使样式变化更平滑
-          input.style.transition = 'border 0.3s ease';
-          
-          // 添加事件监听器，在用户交互后移除样式
-          const removeStyle = () => {
-            input.style.border = '';
-            input.style.transition = '';
-            input.removeEventListener('focus', removeStyle);
-            input.removeEventListener('change', removeStyle);
-          };
-          input.addEventListener('focus', removeStyle);
-          input.addEventListener('change', removeStyle);
         } catch (error) {
-          // 移除错误提示
-          input.style.border = 'none';
+          // 静默处理错误
         }
       }
     });

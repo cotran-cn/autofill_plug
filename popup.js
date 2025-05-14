@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const aiInput = document.getElementById('aiInput').value;
       const formElements = await getFormElements();
       
-      const prompt = `##角色\n表单分析助手\n##任务\n将用户输入的信息填充到对应表单\n##输出格式示例\nadmin:administrator\n##注意事项\n1、优先输出element_name,若element_name值为无则输出ID值:内容\n2、直接输出结果，无需任何样式、无需任何多余字符\n##表单信息如下\n${JSON.stringify(formElements)}\n##用户输入如下\n${aiInput}`;
+      const prompt = `##角色\n表单分析助手\n##任务\n将用户输入的信息填充到对应表单\n##输出格式示例\nadmin:administrator\n##注意事项\n1、优先输出element_name,若element_name值为无则输出ID值:内容\n2、对于select下拉框，必须使用option的value值而不是显示文本\n3、直接输出结果，无需任何样式、无需任何多余字符\n##表单信息如下\n${JSON.stringify(formElements)}\n##用户输入如下\n${aiInput}`;
       
       const data = await callAI(prompt);
       const result = data.choices[0].message.content;
@@ -140,9 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const formInfo = document.getElementById('formInfo');
         if (response && Array.isArray(response) && response.length > 0) {
-          formInfo.innerHTML = '<h3>检测到的表单元素：</h3>' + response.map(element => 
-            `<div>ID: ${element.id || '无'}, element_name: ${element.name || '无'}, 类型: ${element.type}, 标签名: ${element.tagName}, 标签: ${element.label || '无'}</div>`
-          ).join('');
+          formInfo.innerHTML = '<h3>检测到的表单元素：</h3>' + response.map(element => {
+            let optionsInfo = '';
+            if (element.tagName === 'SELECT' && element.options) {
+              optionsInfo = '，选项: ' + element.options.map(opt => `${opt.value}=${opt.text}`).join(' | ');
+            }
+            return `<div>ID: ${element.id || '无'}, element_name: ${element.name || '无'}, 类型: ${element.type}, 标签名: ${element.tagName}, 标签: ${element.label || '无'}${optionsInfo}</div>`;
+          }).join('');
         } else if (!response || !Array.isArray(response)) {
           formInfo.innerHTML = '<p>获取表单元素数据格式错误。</p>';
         } else {
